@@ -1,0 +1,10 @@
+[
+  {
+    "model": "directory.Interest",
+    "pk": 0,
+    "fields": {
+      "name": "General",
+      "description": ""
+    }
+  }
+]

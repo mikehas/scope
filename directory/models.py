@@ -14,18 +14,20 @@ class Interest(models.Model):
     return self.name
 
 class Location(models.Model):
-  interest = models.ForeignKey(Interest)
   name = models.CharField(max_length=200)
-  description = models.CharField(blank=True,max_length=200)
-  address = models.CharField(blank=True,max_length=200)
-  city = models.CharField(blank=True,max_length=200)
-  zipcode = models.CharField(blank=True,max_length=200)
-  state = models.CharField(blank=True,max_length=200) 
-  region = models.CharField(blank=True,max_length=200) 
-  country = models.CharField(blank=True,max_length=200)
-  longitude = models.DecimalField(blank=True,null=True,decimal_places=10,max_digits=50)
-  latitude = models.DecimalField(blank=True,null=True,decimal_places=10,max_digits=50)
-  googleaddress = models.CharField(blank=True,max_length=500)
+  interest = models.ForeignKey(Interest,blank=True,default=0)
+  description = models.CharField(blank=True,max_length=200,default='')
+  note = models.CharField(blank=True,max_length=1500,default='')
+  address = models.CharField(blank=True,max_length=200,default='')
+  city = models.CharField(blank=True,max_length=200,default='')
+  phone = models.CharField(blank=True,max_length=200,default='')
+  zipcode = models.CharField(blank=True,max_length=200,default='')
+  state = models.CharField(blank=True,max_length=200,default='') 
+  region = models.CharField(blank=True,max_length=200,default='') 
+  country = models.CharField(blank=True,max_length=200,default='')
+  longitude = models.DecimalField(blank=True,decimal_places=10,max_digits=50,default=0)
+  latitude = models.DecimalField(blank=True,decimal_places=10,max_digits=50,default=0)
+  googleaddress = models.CharField(blank=True,max_length=500,default='')
   mod_date = models.DateField(blank=True,default=datetime.now())
 
   def __unicode__(self):
@@ -48,9 +50,9 @@ class Location_operator(models.Model):
 
 class Location_hour(models.Model):
   location = models.ForeignKey(Location)
-  day = models.CharField(blank=True,null=True,max_length=200)
-  hopen = models.CharField(blank=True,null=True,max_length=15)
-  hclose = models.CharField(blank=True,null=True,max_length=15)
+  day = models.CharField(blank=True,max_length=200)
+  hopen = models.CharField(blank=True,max_length=15)
+  hclose = models.CharField(blank=True,max_length=15)
 
   def __unicode__(self):
     return self.location

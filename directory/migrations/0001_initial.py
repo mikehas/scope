@@ -12,33 +12,37 @@ class Migration(SchemaMigration):
         db.create_table('directory_interest', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('description', self.gf('django.db.models.fields.CharField')(max_length=1000)),
+            ('description', self.gf('django.db.models.fields.CharField')(max_length=1000, blank=True)),
         ))
         db.send_create_signal('directory', ['Interest'])
 
         # Adding model 'Location'
         db.create_table('directory_location', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('interest', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['directory.Interest'])),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('description', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('address', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('city', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('zipcode', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('state', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('region', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('country', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('longitude', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=50, decimal_places=10, blank=True)),
-            ('latitude', self.gf('django.db.models.fields.DecimalField')(null=True, max_digits=50, decimal_places=10, blank=True)),
-            ('googleaddress', self.gf('django.db.models.fields.CharField')(max_length=500, null=True, blank=True)),
+            ('interest', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['directory.Interest'], blank=True)),
+            ('description', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('note', self.gf('django.db.models.fields.CharField')(max_length=1500, blank=True)),
+            ('address', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('city', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('phone', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('zipcode', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('state', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('region', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('country', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('longitude', self.gf('django.db.models.fields.DecimalField')(max_digits=50, decimal_places=10, blank=True)),
+            ('latitude', self.gf('django.db.models.fields.DecimalField')(max_digits=50, decimal_places=10, blank=True)),
+            ('googleaddress', self.gf('django.db.models.fields.CharField')(max_length=500, blank=True)),
+            ('mod_date', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2012, 9, 5, 0, 0), blank=True)),
         ))
         db.send_create_signal('directory', ['Location'])
 
         # Adding model 'Operator'
         db.create_table('directory_operator', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('link', self.gf('django.db.models.fields.CharField')(max_length=200)),
+            ('name', self.gf('django.db.models.fields.CharField')(default='', max_length=200)),
+            ('link', self.gf('django.db.models.fields.CharField')(default='', max_length=200, blank=True)),
+            ('notes', self.gf('django.db.models.fields.CharField')(default='', max_length=500, blank=True)),
         ))
         db.send_create_signal('directory', ['Operator'])
 
@@ -54,9 +58,9 @@ class Migration(SchemaMigration):
         db.create_table('directory_location_hour', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('location', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['directory.Location'])),
-            ('day', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('hopen', self.gf('django.db.models.fields.CharField')(max_length=15, null=True, blank=True)),
-            ('hclose', self.gf('django.db.models.fields.CharField')(max_length=15, null=True, blank=True)),
+            ('day', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('hopen', self.gf('django.db.models.fields.CharField')(max_length=15, blank=True)),
+            ('hclose', self.gf('django.db.models.fields.CharField')(max_length=15, blank=True)),
         ))
         db.send_create_signal('directory', ['Location_hour'])
 
@@ -99,6 +103,17 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('directory', ['Report'])
 
+        # Adding model 'Project'
+        db.create_table('directory_project', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(default='', max_length=200)),
+            ('details', self.gf('django.db.models.fields.TextField')(max_length=1000, blank=True)),
+            ('link', self.gf('django.db.models.fields.CharField')(default='', max_length=200, blank=True)),
+            ('notes', self.gf('django.db.models.fields.CharField')(default='', max_length=500, blank=True)),
+            ('create_date', self.gf('django.db.models.fields.DateField')(default=datetime.datetime.now, blank=True)),
+        ))
+        db.send_create_signal('directory', ['Project'])
+
 
     def backwards(self, orm):
         # Deleting model 'Interest'
@@ -128,35 +143,41 @@ class Migration(SchemaMigration):
         # Deleting model 'Report'
         db.delete_table('directory_report')
 
+        # Deleting model 'Project'
+        db.delete_table('directory_project')
+
 
     models = {
         'directory.interest': {
             'Meta': {'object_name': 'Interest'},
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '1000'}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '1000', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'})
         },
         'directory.location': {
             'Meta': {'object_name': 'Location'},
-            'address': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'city': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'country': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'googleaddress': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
+            'address': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'city': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'country': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'googleaddress': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'interest': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['directory.Interest']"}),
-            'latitude': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '50', 'decimal_places': '10', 'blank': 'True'}),
-            'longitude': ('django.db.models.fields.DecimalField', [], {'null': 'True', 'max_digits': '50', 'decimal_places': '10', 'blank': 'True'}),
+            'interest': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['directory.Interest']", 'blank': 'True'}),
+            'latitude': ('django.db.models.fields.DecimalField', [], {'max_digits': '50', 'decimal_places': '10', 'blank': 'True'}),
+            'longitude': ('django.db.models.fields.DecimalField', [], {'max_digits': '50', 'decimal_places': '10', 'blank': 'True'}),
+            'mod_date': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2012, 9, 5, 0, 0)', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'region': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'state': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'zipcode': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
+            'note': ('django.db.models.fields.CharField', [], {'max_length': '1500', 'blank': 'True'}),
+            'phone': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'region': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'state': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'zipcode': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'})
         },
         'directory.location_hour': {
             'Meta': {'object_name': 'Location_hour'},
-            'day': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'hclose': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
-            'hopen': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
+            'day': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'hclose': ('django.db.models.fields.CharField', [], {'max_length': '15', 'blank': 'True'}),
+            'hopen': ('django.db.models.fields.CharField', [], {'max_length': '15', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'location': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['directory.Location']"})
         },
@@ -175,8 +196,9 @@ class Migration(SchemaMigration):
         'directory.operator': {
             'Meta': {'object_name': 'Operator'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'link': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'})
+            'link': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '200', 'blank': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '200'}),
+            'notes': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '500', 'blank': 'True'})
         },
         'directory.perspective': {
             'Meta': {'object_name': 'Perspective'},
@@ -188,6 +210,15 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'pitch': ('django.db.models.fields.DecimalField', [], {'max_digits': '50', 'decimal_places': '10'}),
             'zoom': ('django.db.models.fields.DecimalField', [], {'max_digits': '50', 'decimal_places': '10'})
+        },
+        'directory.project': {
+            'Meta': {'object_name': 'Project'},
+            'create_date': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'details': ('django.db.models.fields.TextField', [], {'max_length': '1000', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'link': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '200', 'blank': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '200'}),
+            'notes': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '500', 'blank': 'True'})
         },
         'directory.report': {
             'Meta': {'object_name': 'Report'},
