@@ -1,0 +1,9 @@
+{% if latest_location_list %}
+    <ul>
+    {% for location in latest_location_list %}
+        <li><a href="/location/{{ location.id }}/">{{ location.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No locations are available.</p>
+{% endif %}
