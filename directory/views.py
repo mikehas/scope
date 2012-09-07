@@ -3,6 +3,8 @@ from django.shortcuts import render_to_response
 from directory.models import Project, Location
 from django.http import HttpResponse
 from django.http import Http404
+from django.template import RequestContext
+
 
 def index(request):
     latest_project_list = Project.objects.all().order_by('-create_date')[:5]
@@ -24,7 +26,11 @@ def location_detail(request, location_id):
         l = Location.objects.get(pk=location_id)
     except Location.DoesNotExist:
         raise Http404
-    return render_to_response('location/detail.html', {'location': l})
+    return render_to_response(
+      'location/detail.html', 
+      {'location': l}, 
+      context_instance=RequestContext(request)
+    )
 
 def manage_add(request):
   return HttpResponse("Add data...")

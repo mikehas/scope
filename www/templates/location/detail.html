@@ -1,1 +1,135 @@
-{{ location }}
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBIafdqsZ-oOe_V2bjhdiED9Rl36eLZA-Y&sensor=true">
+    </script>
+    <script type="text/javascript">
+
+      var geocoder;
+      var map;
+      var panorama;
+      function initialize() {
+        var initlatlng = new google.maps.LatLng(-34.397, 150.644);
+        var mapOptions = {
+          zoom: 15,
+          center: initlatlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        
+        var marker = new google.maps.Marker({
+            map: map,
+            position: initlatlng
+        });
+        
+        
+        var panoramaOptions = {
+              position: new google.maps.LatLng(initlatlng),
+              pov: {
+                heading: 115,
+                pitch: -13,
+                zoom: 1
+              },
+              visible: true
+        };
+        panorama = new google.maps.StreetViewPanorama(document.getElementById('pano_canvas'), panoramaOptions);
+        
+        codeAddress("{{ location.googleaddress }}", function(mylatlng) {
+            map.setCenter(mylatlng);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: mylatlng
+            });
+            marker.setMap(map);
+            panorama.setPosition(mylatlng);
+        });
+        
+    };
+      
+    function codeAddress(myloc,cbfunc) {
+        geocoder = new google.maps.Geocoder();
+        var address = myloc;
+        geocoder.geocode( { 'address': address}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            cbfunc(results[0].geometry.location);
+          } else {
+            alert("Geocode was not successful for the following reason: " + status);
+          }
+        });
+    };
+    
+    </script>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            color: #227;
+        }
+        dt {
+            font-weight: bold;
+            float:left;
+        }
+        dl {
+        }
+        h1 {
+            font-family: Geneva;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+        #left_col {
+            width:300px;
+            height:900px;
+            float:left;
+        }
+        #center_info {
+            padding: 15px;
+            width=100%;
+            height:250px;
+        }
+        #map_canvas {
+            width:100%;
+            height:500px;
+        }
+        #pano_canvas {
+            width:1000px;
+            height:750px;
+        }
+    
+    </style>
+  </head>
+  <!-- <body onload="initialize()">
+    <div id="map_canvas" style="width:100%; height:200px"></div>
+    <div id="pano" style="width:100%; height:600px"></div>
+  </body> -->
+
+    <body onload="initialize()">
+        <div id="left_col">
+            <div id="center_info">
+                <h1>{{location.name}}</h1>
+                <dl>
+                	<dt>Address:</dt>
+                	<dd>{{location.address}}</dd>
+                	<dt>State:</dt>
+                	<dd>{{location.state}}</dd>
+                	<dt>Zipcode:</dt>
+                	<dd>{{location.zipcode}}</dd>
+                	<dt>Phone:</dt>
+                	<dd>{{location.phone}}</dd>
+                </dl>
+            </div>
+            <div id="map_canvas"></div>
+        </div>
+        <div id="pano_canvas"></div>
+    </body>
+    
+</html>
+
