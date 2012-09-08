@@ -103,6 +103,15 @@ class Project(models.Model):
 
   def __unicode__(self):
     return self.name
+    
+class Geocode_cache(models.Model):
+  location = models.CharField(max_length=200, default="")
+  latitude = models.DecimalField(blank=True, decimal_places=10,max_digits=50)
+  longitude = models.DecimalField(blank=True, decimal_places=10,max_digits=50)
+  create_date = models.DateField(blank=True, default=datetime.now, )
+
+  def __unicode__(self):
+    return self.location
   
   
 

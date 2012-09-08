@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/media/css/screen.css" type="text/css">
+    
+    <!-- Type Face Font support and loading -->
+    <script type="text/javascript" src="/media/js/typeface-0.15.js"></script>
+
+    <script type="text/javascript" src="/media/js/origin_bold.typeface.js"></script>
+    
+    {% block head %}{% endblock %}
+  </head>
+  <body onload="initialize()">
+    <div id="header">
+      <div id="logo"  class="typeface-js">
+          <h1> Scope the Sitch<h1>
+          <h2>{% block header %}{% endblock %}</h2>
+      </div>
+    </div>
+    
+    {% block content %}{% endblock %}
+  </body>
+</html>
