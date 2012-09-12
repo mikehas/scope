@@ -74,14 +74,15 @@ class Location_service(models.Model):
 class Perspective(models.Model):
   location = models.ForeignKey(Location)
   name = models.CharField(max_length=200)
-  longitude = models.DecimalField(decimal_places=10,max_digits=50)
-  latitude = models.DecimalField(decimal_places=10,max_digits=50)
+  lat = models.DecimalField(null=True,decimal_places=10,max_digits=50)
+  lng = models.DecimalField(null=True,decimal_places=10,max_digits=50)
   heading = models.DecimalField(decimal_places=10,max_digits=50)
   pitch = models.DecimalField(decimal_places=10,max_digits=50)
-  zoom = models.DecimalField(decimal_places=10,max_digits=50) 
+  zoom = models.DecimalField(decimal_places=10,max_digits=50)
+  create_date = models.DateField(blank=True, default=datetime.now)
 
   def __unicode__(self):
-    return self.name
+    return self.location.name
 
 # Report is the experience of a user at a particular location 
 class Report(models.Model):

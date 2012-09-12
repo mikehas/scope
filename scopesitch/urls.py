@@ -23,5 +23,6 @@ urlpatterns = patterns('',
     url(r'^location/$', 'directory.views.location_index'),
     url(r'^location/(?P<location_id>\d+)/$', 'directory.views.location_detail'),
     url(r'^manage/add$', 'directory.views.manage_add'),
-    
+    url(r'^location/save_pov_form/$', 'directory.views.save_pov_form'),
+    url(r'^location/save_pov/$', 'directory.views.save_pov')
 )

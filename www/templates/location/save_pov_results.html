@@ -1,0 +1,12 @@
+<p>You searched for: <strong>{{ query }}</strong></p>
+
+{% if loc %}
+    <p>Found {{ loc|length }} loc{{ loc|pluralize }}.</p>
+    <ul>
+        {% for l in loc %}
+        <li>{{ loc.title }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No locs matched your search criteria.</p>
+{% endif %}

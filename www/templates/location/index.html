@@ -1,3 +1,8 @@
+{% extends 'base.html' %}
+{% block header %}
+  List of All Centers
+{% endblock %}
+{% block content %}
 {% if latest_location_list %}
     <ul>
     {% for location in latest_location_list %}
@@ -7,3 +12,4 @@
 {% else %}
     <p>No locations are available.</p>
 {% endif %}
+{% endblock %}

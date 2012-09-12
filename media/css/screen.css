@@ -8,17 +8,6 @@ dt {
 }
 dl {
 }
-
-#header {
-  padding: 20px 25px 10px 25px;
-  background-color: #FFF;
-  clear: both;
-  height: 75px;
-}
-#header #logo {
-  color: #6D098F;  
-  font-family: Origin; 
-}
 h1 {
     font-weight: bold;
 }
@@ -28,6 +17,43 @@ h2 {
     color: black;
     font-family: Origin;
     font-size: 15px;
+}
+#header {
+  padding: 20px 25px 0px 25px;
+  background-color: #FFF;
+  clear: both;
+  height: 75px;
+}
+#header #logo {
+  color: #6D098F;  
+  font-family: Origin; 
+}
+#navbar {
+  margin-top: -15px;
+  height: 20px;
+  background-color: #0293A6;
+}
+#navbar .button a{
+  text-decoration: none;
+}
+#navbar .button {
+  width: 150px;
+  height: 20px;
+  text-align: center;
+  font: #FFF;
+  font-family: Arial;
+  float:left;
+  margin:none;
+}
+#navbar .button:hover {
+  width: 150px;
+  height: 20px;
+  text-align: center;
+  font: #0293A6;
+  font-family: Arial;
+  float:left;
+  background-color: #FFF;
+  margin:none;
 }
 
 #left_col {
