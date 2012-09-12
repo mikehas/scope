@@ -46,12 +46,12 @@
         	<dd>{{location.phone}}</dd>
         	<br/>        	
         	<form id="save_pov_form" action="/location/save_pov/" method="get">
-              <input type="hidden" name="loc" value="{{location.id|default:"0"}}">
-              <input type="hidden" name="lat" value="{{initpers.lat|default:"0"}}">
-              <input type="hidden" name="lng" value="{{initpers.lng|default:"0"}}">
-              <input type="hidden" name="heading" value="{{initpers.heading|default:"0"}}">
-              <input type="hidden" name="pitch" value="{{initpers.pitch|default:"0"}}">
-              <input type="hidden" name="zoom" value="{{initpers.zoom|default:"1"}}">
+              <input type="hidden" name="loc" value="{{location.id|default_if_none:"0"}}">
+              <input type="hidden" name="lat" value="{{initpers.lat|default_if_none:"0"}}">
+              <input type="hidden" name="lng" value="{{initpers.lng|default_if_none:"0"}}">
+              <input type="hidden" name="heading" value="{{initpers.heading|default_if_none:"0"}}">
+              <input type="hidden" name="pitch" value="{{initpers.pitch|default_if_none:"0"}}">
+              <input type="hidden" name="zoom" value="{{initpers.zoom|default_if_none:"1"}}">
               <input type="submit" id="sav_pers_btn" value="Save Perspective">
           </form>
         	<br/>

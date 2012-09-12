@@ -43,7 +43,7 @@ function initialize(gaddy) {
     });
     marker.setMap(map);
     panorama.setPosition(mylatlng);
-    panorama.setPov({heading:parseFloat(initPovForm["heading"].value), pitch:parseFloat(initPovForm["pitch"].value), zoom:parseFloat(initPovForm["zoom"].value)});    
+    panorama.setPov({heading:parseFloat(initPovForm["heading"].value), pitch:parseFloat(initPovForm["pitch"].value), zoom:parseInt(initPovForm["zoom"].value)});    
   }else {
     // Get the geocoded address coords, (mylatlng), then set the new 
     // map object's centers.
@@ -76,10 +76,6 @@ function codeAddress(myloc, cbfunc) {
   });
   
 };
-
-function initializePerspective(lat, lng, heading, tilt, zoom){
-  panorama
-}
 
 function populateSavePovForm() {
   var pov = panorama.getPov();

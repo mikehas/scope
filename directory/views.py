@@ -35,6 +35,7 @@ def location_detail(request, location_id):
     perspectives = Perspective.objects.filter(location=l).order_by('-create_date')
     if len(perspectives) > 0:
       perspective = perspectives[0]
+      print perspective.zoom
       initpers = {
         'lat': perspective.lat,
         'lng': perspective.lng,
